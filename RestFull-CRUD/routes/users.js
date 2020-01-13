@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+
 const sql = require('mssql')
 const config = {
   user: '4DD_09',  //Vostro user name
@@ -7,6 +8,7 @@ const config = {
   server: "213.140.22.237",  //Stringa di connessione
   database: '4DD_09', //(Nome del DB)
 }
+
 
 /* GET users listing. */
 router.get('/attori', function(req, res, next) {
@@ -34,6 +36,11 @@ router.get('/clashroyale', function(req, res, next) {
     });
   });
 });
+
+router.post('/', function(req, res, next){
+    console.log(req.body);
+    res.send(req.body);
+})
 
 
 module.exports = router;

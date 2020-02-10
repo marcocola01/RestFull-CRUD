@@ -43,6 +43,11 @@ router.get('/search/:name', function (req, res, next) {
   executeQuery(res, sqlQuery, next);
 });
 
+router.get('/listaunita', function (req, res, next) {
+  let sqlQuery = `select * from dbo.[cr-unit-attributes] where Unit = '${req.params.name}'`;
+  executeQuery(res, sqlQuery, next);
+});
+
 router.post('/', function (req, res, next) {
   // Add a new Unit  
   let unit = req.body;

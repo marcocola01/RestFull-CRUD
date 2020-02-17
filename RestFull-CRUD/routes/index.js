@@ -9,16 +9,7 @@ const config = {
   database: '4DD_09', //(Nome del DB)
 }
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-router.get('/listaunita', function (req, res, next) {
-  let sqlQuery = "select * from dbo.[cr-unit-attributes]";
-  executeQuery(res, sqlQuery, next);
-});
-let executeQuery = function (res, query, next) {
+let executeQuery = function (res, query, next, pagina) {
   sql.connect(config, function (err) {
     if (err) { //Display error page
       console.log("Error while connecting database :- " + err);
@@ -33,11 +24,32 @@ let executeQuery = function (res, query, next) {
         sql.close();
         return;
       }
-      res.render('listaunita', {unit:result.recordset}); //Il vettore con i dati è nel campo recordset (puoi loggare result per verificare)
+      //res.render('listaunita', {unit:result.recordset}); //Il vettore con i dati è nel campo recordset (puoi loggare result per verificare)
+      renderizza(pagina, res, result.recordset);
       sql.close();
     });
 
   });
 }
+renderizza = function(pagina, res, dati)
+{
+    res.render(pagina, {unita: dati})
+}
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
+router.get('/listaunita', function (req, res, next) {
+  let sqlQuery = "select * from dbo.[cr-unit-attributes]";
+  executeQuery(res, sqlQuery, next, "listaunita");
+});
+
+router.get('/unit/:name', function (req, res, next) {
+  let sqlQuery = `select * from dbo.[cr-unit-attributes] where Unit = '${req.params.name}'`;
+  executeQuery(res, sqlQuery, next, "unit");
+});
+
 
 module.exports = router;

@@ -1,7 +1,11 @@
 block content
   h1= title
   p Welcome to #{title}
-
+  ul 
+    li
+    a(href="index") Nuova unità
+    li
+    a(href="/listaunita") Lista unità
   form(method='POST' action='/users')
     div  
       label(for='Unit') Unit:

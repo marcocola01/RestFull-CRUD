@@ -51,5 +51,9 @@ router.get('/unit/:name', function (req, res, next) {
   executeQuery(res, sqlQuery, next, "unit");
 });
 
+router.get('/index', function(req, res, next) {
+  res.render('index');
+});
+
 
 module.exports = router;
